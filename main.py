@@ -11,4 +11,5 @@ print(mic.position)
 mic.position = np.ones((1,3))
 print(mic.position)
 mic.set_source(so)
-mic.simulate()
+print(so.get_sound_at_position(np.ones((1,3))))
+

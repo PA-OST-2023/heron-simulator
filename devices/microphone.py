@@ -5,6 +5,8 @@ class Microphone():
 
     _source = None
     _position = np.zeros((1,3))
+    _normal = np.array([1,0,0])
+    _characteristic = np.ones(360)
 
     def __init__(self, position):
         self.__position = position
@@ -26,9 +28,11 @@ class Microphone():
     def set_source(self, source):
         self._source = source
 
-    def simulate(self):
+    def simulate_mic(self, sounds, normals):
         print(1)
-        self._source.get_sound_at_position(self._position)
+        for sound, normal in zip(sounds, normals):
+            pass
+        return np.sum(sounds, axis=0)
         pass
 
     def test(self):
