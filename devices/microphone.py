@@ -4,8 +4,8 @@ from devices.source import Source
 class Microphone():
 
     _source = None
-    _position = np.zeros((1,3))
-    _normal = np.array([1,0,0])
+    _position = np.zeros((3))
+    _normal = np.array([-1,0,0])
     _characteristic = np.ones(360)
 
     def __init__(self, position):
@@ -31,10 +31,15 @@ class Microphone():
     def simulate_mic(self, sounds, normals):
         print(1)
         for sound, normal in zip(sounds, normals):
-            pass
+            angle =  np.arccos(np.clip(np.dot(self._normal, normal), -1.0, 1.0))
+            print(f'{angle = }')
+            characteristic = self._get_characteristic_at_angle(angle)
         return np.sum(sounds, axis=0)
-        pass
 
     def test(self):
         print('Mic Test')
+
+    def _get_characteristic_at_angle(self, angle):
+        angle = int(angle/(2*pi) * 180)
+        return self._characteristic[angle + 180]
 
