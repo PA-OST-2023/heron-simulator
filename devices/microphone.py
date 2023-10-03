@@ -8,6 +8,9 @@ class Microphone():
     _normal = np.array([-1,0,0])
     _characteristic = np.ones(360)
 
+    def __init__(self, config, position, normal):
+        pass
+
     def __init__(self, position):
         self.__position = position
 
