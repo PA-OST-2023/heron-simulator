@@ -2,5 +2,9 @@
 name = 'Mic 1'
 
 [characteristics]
-# Noise in dBm
-noiselevel = 30
+# Noise in dBSPL
+noisefloor = 30
+SNR = 64
+samplingrate = 44100
+amplitude_offset = 0
+
