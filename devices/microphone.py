@@ -1,18 +1,32 @@
 import numpy as np
-from devices.source import Source
+import matplotlib.pyplot as plt
+import scipy
+import tomli
+
+try:
+    from source import Source
+except ModuleNotFoundError:
+    pass
 
 
 class Microphone:
     _source = None
-    _position = np.zeros((3))
-    _normal = np.array([-1, 0, 0])
-    _characteristic = np.ones(360)
-    _noisefloor = 0
+    position = None
+    _normal = None
+    _noisefloor = 40
     _SNR = 100
     _samplingrate = 44100
     _amplitude_offset = 0
 
-    def __init__(self, config, position, normal):
+    def __init__(self, config=None, position=None, normal=None):
+        if position is None:
+            position = np.zeros(3)
+        if normal is None:
+            normal = np.array([1, 0, 0])
+        self.position = position
+        self._normal = normal
+        if config is None:
+            return
         with open(config, "rb") as f:
             m_conf = tomli.load(f)
         characterisitcs = m_conf.get("characterisitcs", {})
@@ -22,40 +36,42 @@ class Microphone:
         self._amplitude_offset = characterisitcs.get(
             "amplitude_offset", self._amplitude_offset
         )
-        pass
 
-    def __init__(self, position):
-        self.__position = position
-
-    def __init__(self, config):
-        pass
-
-    def __init__(self):
-        print("ok Python")
-
-    @property
-    def position(self):
-        return self._position
-
-    @position.setter
-    def position(self, position):
-        self._position = position
+    @classmethod
+    def fromposition(cls, position):
+        return cls(position=position)
 
     def set_source(self, source):
         self._source = source
 
     def simulate_mic(self, sounds, normals):
         print(1)
+        noise_scale = 10 ** ((self._noisefloor - 120) / 20)
+        noise = np.random.normal(0, noise_scale, sounds[0].shape[0])
         for sound, normal in zip(sounds, normals):
-            angle = np.arccos(np.clip(np.dot(self._normal, normal), -1.0, 1.0))
-            print(f"{angle = }")
-            characteristic = self._get_characteristic_at_angle(angle)
-        return np.sum(sounds, axis=0)
+            sound *= 10 ** (self._amplitude_offset / 20)
+        return np.sum(sounds, axis=0) + noise
 
-    def test(self):
-        print("Mic Test")
 
-    def _get_characteristic_at_angle(self, angle):
-        angle = int(angle / (2 * pi) * 180)
-        return self._characteristic[angle + 180]
-
+if __name__ == "__main__":
+    print(1)
+    xx = np.linspace(0, 3, 44100 * 3)
+    sigi = (
+        np.sin(50 * xx)
+        + np.cos(25 * xx)
+        + np.sin(12.5 * xx + 2)
+        + np.cos(6.25 * xx + 0.7)
+    )
+    fig, ax = plt.subplots()
+    ax.plot(xx, sigi)
+    plt.show()
+    source = Source()
+    source.add_sound(sigi)
+    mic = Microphone.fromposition(np.ones(3))
+    sisgi_at_mic, hansi = source.get_sound_atposition(mic.position)
+    micsound = mic.simulate_mic([sisgi_at_mic], [hansi])
+    fig, ax = plt.subplots(3)
+    ax[0].plot(xx, sigi)
+    ax[1].plot(xx[:-22], sisgi_at_mic)
+    ax[2].plot(xx[:-22], micsound)
+    plt.show()

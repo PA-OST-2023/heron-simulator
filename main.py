@@ -5,8 +5,6 @@ from devices.microphone import Microphone
 
 so = Source()
 mic = Microphone()
-so.test()
-mic.test()
 print(mic.position)
 mic.position = np.ones((3))
 print(mic.position)
