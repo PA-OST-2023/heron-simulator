@@ -6,20 +6,21 @@ import matplotlib.pyplot as plt
 
 class Source:
     position = None
-    _sr = 1 * 44100
+    _sr = None
     # speed of sound in m/s
-    _speed_sound = 333
+    _speed_sound = None
 
-    def __init__(self, config=None, position=None):
+    def __init__(self, config=None, position=None, speed_sound=333, sr=44100):
         if position is None:
             position = np.zeros(3)
         self.position = position
+        self._speed_sound = speed_sound
+        self._sr = sr
         if config is None:
             return
         with open(config, "rb") as f:
             s_conf = tomli.load(f)
         self.position = np.array(s_conf.get("position", self.position))
-        pass
 
     @classmethod
     def fromposition(cls, position):
