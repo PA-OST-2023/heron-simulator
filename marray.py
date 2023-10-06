@@ -6,17 +6,16 @@ from devices.source import Source
 from devices.microphone import Microphone
 
 
-def open_array(config):
-    with open(config, "rb") as f:
+def open_array(array_config, mic_type="./config/testMic.toml"):
+    with open(array_config, "rb") as f:
         config = tomli.load(f)
-    m_type = config.get("type", "mic")
-    m_config = f"config/{m_type}.toml"
+    mic_config = mic_type
     mics = []
     for k, v in config["microphones"].items():
         position = v.get("position", None)
         print(position)
         normal = v.get("normal", None)
-        mic = Microphone(m_config, position, normal)
+        mic = Microphone(mic_config, position, normal)
         mics.append(mic)
     print("initilaized")
     return mics
@@ -51,7 +50,7 @@ if __name__ == "__main__":
     fig, ax = plt.subplots()
     ax.plot(xx, sigi)
     plt.show()
-    source = Source(config="./config/source.toml")
+    source = Source()
     source.add_sound(sigi)
     mic_signals = []
     fig, ax = plt.subplots(5, 2, sharex="all")

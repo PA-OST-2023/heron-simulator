@@ -1,7 +1,6 @@
-type = 'testMic'
 [microphones]
     [microphones.mic_1]
-    position = [1.0,0.0,0.0]
+    position = [4.0,0.0,0.0]
     normal = [0.0,1.0,1.0]
 
     [microphones.mic_2]

@@ -1,2 +1,12 @@
 sr = 44100
 sound_speed = 333
+
+[sources]
+    [sources.source0]
+        position=[10,3,5]
+        name='box'
+        audio_file='./audio/dernkala.wav'
+ 
+ [array]
+ mic_type = './config/testMic.toml'
+ array_config = './config/array.toml'

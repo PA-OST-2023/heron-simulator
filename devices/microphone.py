@@ -10,8 +10,8 @@ except ModuleNotFoundError:
 
 
 class Microphone:
-    _source = None
     position = None
+    _source = None
     _normal = None
     _noisefloor = 40
     _SNR = 100
@@ -23,7 +23,7 @@ class Microphone:
             position = np.zeros(3)
         if normal is None:
             normal = np.array([1, 0, 0])
-        self.position = position
+        self.position = np.asarray(position)
         self._normal = normal
         if config is None:
             return

@@ -2,25 +2,33 @@ import numpy as np
 import scipy
 import tomli
 import matplotlib.pyplot as plt
+import sys
+
+sys.path.append("..")
+sys.path.append("./")
+from audioHelper import AudioObject, read_wav
 
 
 class Source:
     position = None
-    _sr = None
+    sr = None
     # speed of sound in m/s
     _speed_sound = None
 
-    def __init__(self, config=None, position=None, speed_sound=333, sr=44100):
+    def __init__(
+        self, position=None, name="Default", audio_file=None, speed_sound=333, sr=44100
+    ):
         if position is None:
             position = np.zeros(3)
-        self.position = position
+        self.position = np.asarray(position)
         self._speed_sound = speed_sound
-        self._sr = sr
-        if config is None:
+        self.sr = sr
+        self.name = name
+        if audio_file is None:
             return
-        with open(config, "rb") as f:
-            s_conf = tomli.load(f)
-        self.position = np.array(s_conf.get("position", self.position))
+        audio = read_wav(audio_file)
+        self.sr = audio.sr
+        self._sound = audio.audio
 
     @classmethod
     def fromposition(cls, position):
@@ -48,7 +56,7 @@ class Source:
         normal_vec = diff_vector / distance
         print(distance)
         delay = distance / self._speed_sound
-        samples_df = delay * self._sr
+        samples_df = delay * self.sr
         samples_d = int(np.round(samples_df))
         sub_s_delay = samples_df - samples_d
 
@@ -62,6 +70,7 @@ class Source:
         print(self._sound.shape)
         filtered = filtered[f_len_half:]
         sound_at_pos = self._shift(filtered, samples_d, 0)
+        sound_at_pos /= distance
         #         fig, ax = plt.subplots(3, sharex='all')
         #         ax[0].plot(self._sound)
         #         ax[1].plot(filtered[22:])
