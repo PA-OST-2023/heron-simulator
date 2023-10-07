@@ -11,6 +11,7 @@ except ModuleNotFoundError:
 
 class Microphone:
     position = None
+    recorded_audio = None
     _source = None
     _normal = None
     _noisefloor = 40
@@ -18,13 +19,14 @@ class Microphone:
     _samplingrate = 44100
     _amplitude_offset = 0
 
-    def __init__(self, config=None, position=None, normal=None):
+    def __init__(self, config=None, position=None, normal=None, name=None):
         if position is None:
             position = np.zeros(3)
         if normal is None:
             normal = np.array([1, 0, 0])
         self.position = np.asarray(position)
         self._normal = normal
+        self.name=name
         if config is None:
             return
         with open(config, "rb") as f:
@@ -45,13 +47,13 @@ class Microphone:
         self._source = source
 
     def simulate_mic(self, sounds, normals):
-        print(1)
+        print(f'Simulate Microphone {self.name}')
         noise_scale = 10 ** ((self._noisefloor - 120) / 20)
         noise = np.random.normal(0, noise_scale, sounds[0].shape[0])
         for sound, normal in zip(sounds, normals):
             sound *= 10 ** (self._amplitude_offset / 20)
-        return np.sum(sounds, axis=0) + noise
-
+        self.recorded_audio = np.sum(sounds, axis=0) + noise
+        return self.recorded_audio
 
 if __name__ == "__main__":
     print(1)
@@ -68,7 +70,7 @@ if __name__ == "__main__":
     source = Source()
     source.add_sound(sigi)
     mic = Microphone.fromposition(np.ones(3))
-    sisgi_at_mic, hansi = source.get_sound_atposition(mic.position)
+    sisgi_at_mic, hansi = source.get_sound_at_position(mic.position)
     micsound = mic.simulate_mic([sisgi_at_mic], [hansi])
     fig, ax = plt.subplots(3)
     ax[0].plot(xx, sigi)

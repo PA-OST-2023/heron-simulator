@@ -7,15 +7,15 @@ from devices.microphone import Microphone
 
 
 def open_array(array_config, mic_type="./config/testMic.toml"):
+    print('Initilaize Array')
     with open(array_config, "rb") as f:
         config = tomli.load(f)
     mic_config = mic_type
     mics = []
     for k, v in config["microphones"].items():
         position = v.get("position", None)
-        print(position)
         normal = v.get("normal", None)
-        mic = Microphone(mic_config, position, normal)
+        mic = Microphone(mic_config, position, normal, k)
         mics.append(mic)
     print("initilaized")
     return mics
@@ -38,7 +38,6 @@ def plot_array(mic_array, sources):
 
 
 if __name__ == "__main__":
-    print(1)
     mic_array = open_array("config/array.toml")
     xx = np.linspace(0, 3, 44100 * 3)
     sigi = (
@@ -57,7 +56,7 @@ if __name__ == "__main__":
     ax[4][1].plot(xx, sigi)
     ax[4][1].set_title("source")
     for i, mic in enumerate(mic_array):
-        signal_at_position, normal = source.get_sound_atposition(mic.position)
+        signal_at_position, normal = source.get_sound_at_position(mic.position)
         mic_signal = mic.simulate_mic([signal_at_position], [normal])
         mic_signals.append(mic_signal)
         ax[i % 5][(i - i % 5) // 5].plot(xx[:-22], mic_signal)

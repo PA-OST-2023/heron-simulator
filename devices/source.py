@@ -50,11 +50,11 @@ class Source:
             result[:] = arr
         return result
 
-    def get_sound_atposition(self, position):
+    def get_sound_at_position(self, position):
+        print(f'calculate sound at Position {position}')
         diff_vector = self.position - position
         distance = np.linalg.norm(diff_vector)
         normal_vec = diff_vector / distance
-        print(distance)
         delay = distance / self._speed_sound
         samples_df = delay * self.sr
         samples_d = int(np.round(samples_df))
@@ -66,20 +66,9 @@ class Source:
         delay_filter = np.sinc(x - sub_s_delay)
         delay_filter = delay_filter * scipy.signal.windows.hamming(f_len)
         filtered = scipy.signal.lfilter(delay_filter, 1, self._sound)
-        print(filtered.shape)
-        print(self._sound.shape)
         filtered = filtered[f_len_half:]
         sound_at_pos = self._shift(filtered, samples_d, 0)
         sound_at_pos /= distance
-        #         fig, ax = plt.subplots(3, sharex='all')
-        #         ax[0].plot(self._sound)
-        #         ax[1].plot(filtered[22:])
-        #         ax[2].plot(sound_at_pos)
-        #         plt.show()
-        #         print(samples_df)
-        #         print(samples_d)
-        #         print(sound_at_pos)
-        #         print(sound_at_pos.shape)
         return sound_at_pos, normal_vec
 
 
@@ -90,8 +79,8 @@ if __name__ == "__main__":
     y = np.sinc(x - 0.5)
     source = Source()
     source.add_sound(np.sin(x / 44100 * 3000))
-    sound1, _ = source.get_sound_atposition(np.ones(3) * 0.1)
-    sound2, _ = source.get_sound_atposition(np.ones(3) * 0.2)
+    sound1, _ = source.get_sound_at_position(np.ones(3) * 0.1)
+    sound2, _ = source.get_sound_at_position(np.ones(3) * 0.2)
     fig, ax = plt.subplots(3, sharex="all")
     ax[0].plot(np.sin(x / 44100 * 3000))
     ax[1].plot(sound1)
