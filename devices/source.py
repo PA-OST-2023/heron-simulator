@@ -51,7 +51,7 @@ class Source:
         return result
 
     def get_sound_at_position(self, position):
-        print(f'calculate sound at Position {position}')
+        print(f"calculate sound at Position {position}")
         diff_vector = self.position - position
         distance = np.linalg.norm(diff_vector)
         normal_vec = diff_vector / distance

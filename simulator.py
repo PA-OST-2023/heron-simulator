@@ -9,11 +9,22 @@ from devices.source import Source
 from devices.microphone import Microphone
 from audioHelper import write_wav
 
+
 def static_simulation(mic_array, sources):
+    """
+    Perform a simulation with static position of the sources
+    and microphone array
+
+    [TODO:description]
+
+    Parameters
+    ----------
+    mic_array : list
+        List of Microphones
+    sources : list
+        List of Source
+    """
     mic_signals = []
-    fig, ax = plt.subplots(5, 2, sharex="all")
-    ax[4][1].plot(np.zeros(10))
-    ax[4][1].set_title("source")
     for i, mic in enumerate(mic_array):
         sound_at_pos_info = [
             source.get_sound_at_position(mic.position) for source in sources
@@ -23,12 +34,10 @@ def static_simulation(mic_array, sources):
         mic_signal = mic.simulate_mic(signal_at_position, normal)
         mic_signals.append(mic_signal)
         write_wav(mic_signal, sources[0].sr, f"./out/{mic.name}.wav")
-        ax[i % 5][(i - i % 5) // 5].plot(mic_signal)
-        ax[i % 5][(i - i % 5) // 5].set_title(i)
-    plt.show()
 
     plot_array(mic_array, sources)
     return mic_signals
+
 
 parser = ArgumentParser()
 parser.add_argument(

@@ -7,7 +7,19 @@ from devices.microphone import Microphone
 
 
 def open_array(array_config, mic_type="./config/testMic.toml"):
-    print('Initilaize Array')
+    """
+    Creates a Mic Array based on a geometric config and Mycrophone Type
+
+    [TODO:description]
+
+    Parameters
+    ----------
+    array_config : String
+        path of Array config file
+    mic_type : String
+        Path of Microphone config file
+    """
+    print("Initilaize Array")
     with open(array_config, "rb") as f:
         config = tomli.load(f)
     mic_config = mic_type

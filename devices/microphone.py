@@ -12,7 +12,8 @@ except ModuleNotFoundError:
 class Microphone:
     position = None
     recorded_audio = None
-    _source = None
+    name = None
+
     _normal = None
     _noisefloor = 40
     _SNR = 100
@@ -26,8 +27,9 @@ class Microphone:
             normal = np.array([1, 0, 0])
         self.position = np.asarray(position)
         self._normal = normal
-        self.name=name
+        self.name = name
         if config is None:
+            print("Microphone initialised without config")
             return
         with open(config, "rb") as f:
             m_conf = tomli.load(f)
@@ -43,17 +45,15 @@ class Microphone:
     def fromposition(cls, position):
         return cls(position=position)
 
-    def set_source(self, source):
-        self._source = source
-
     def simulate_mic(self, sounds, normals):
-        print(f'Simulate Microphone {self.name}')
+        print(f"Simulate Microphone {self.name}")
         noise_scale = 10 ** ((self._noisefloor - 120) / 20)
         noise = np.random.normal(0, noise_scale, sounds[0].shape[0])
         for sound, normal in zip(sounds, normals):
             sound *= 10 ** (self._amplitude_offset / 20)
         self.recorded_audio = np.sum(sounds, axis=0) + noise
         return self.recorded_audio
+
 
 if __name__ == "__main__":
     print(1)
