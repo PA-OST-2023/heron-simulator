@@ -1,5 +1,6 @@
 sr = 44100
 sound_speed = 333
+out_dir = './out/test1/'
 
 [sources]
     [sources.source0]

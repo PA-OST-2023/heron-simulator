@@ -33,7 +33,6 @@ def static_simulation(mic_array, sources):
         normal = [info[1] for info in sound_at_pos_info]
         mic_signal = mic.simulate_mic(signal_at_position, normal)
         mic_signals.append(mic_signal)
-        write_wav(mic_signal, sources[0].sr, f"./out/{mic.name}.wav")
 
     plot_array(mic_array, sources)
     return mic_signals
@@ -61,3 +60,6 @@ sources = [Source(**source_cfg) for source_cfg in sources_configs]
 array_cfg = config["array"]
 mic_array = open_array(**array_cfg)
 signals = static_simulation(mic_array, sources)
+out_dir = config.get('out_dir', './out/')
+[write_wav(mic.recorded_audio, sources[0].sr, f"{out_dir}{mic.name}.wav") for mic in mic_array]
+
