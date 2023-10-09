@@ -12,6 +12,7 @@ except ModuleNotFoundError:
 class Microphone:
     position = None
     recorded_audio = None
+    recorded_audio_by_sourece = None
     name = None
 
     _normal = None
@@ -52,6 +53,7 @@ class Microphone:
         for sound, normal in zip(sounds, normals):
             sound *= 10 ** (self._amplitude_offset / 20)
         self.recorded_audio = np.sum(sounds, axis=0) + noise
+        self.recorded_audio_by_source = np.vstack((np.array(sounds), noise)).T
         return self.recorded_audio
 
 
