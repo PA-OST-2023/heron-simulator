@@ -12,6 +12,7 @@ from audioHelper import AudioObject, read_wav
 class Source:
     position = None
     sr = None
+    name = None
     # speed of sound in m/s
     _speed_sound = None
 
@@ -69,7 +70,7 @@ class Source:
         filtered = filtered[f_len_half:]
         sound_at_pos = self._shift(filtered, samples_d, 0)
         sound_at_pos /= distance
-        return sound_at_pos, normal_vec
+        return sound_at_pos, normal_vec, delay
 
 
 if __name__ == "__main__":
