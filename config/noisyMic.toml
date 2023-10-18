@@ -3,4 +3,4 @@ name = 'Mic 1'
 
 [characteristics]
 # Noise in dBm
-noiselevel = 50
+noiselevel = 40
