@@ -1,6 +1,6 @@
 sr = 48000
 sound_speed = 333
-out_dir = './out/circ/'
+out_dir = './out/circ_noise/'
 
 [sources]
     [sources.source0]
@@ -8,10 +8,11 @@ out_dir = './out/circ/'
         name='box'
         audio_file='./audio/drone.wav'
 
-#    [sources.source1]
-#        position=[10,-3,8]
-#        name='box'
-#        audio_file='./audio/dernNoise.wav'
+   [sources.source1]
+       position=[0,-5,5]
+       name='noise'
+#        audio_file='./audio/drone.wav'
+       audio_file='./audio/dernNoise.wav'
 
  [array]
  mic_type = './config/noisyMic.toml'
