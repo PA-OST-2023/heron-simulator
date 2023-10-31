@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import scipy
 import tomli
 import tomli_w
@@ -70,7 +71,7 @@ sources_configs = [v for k, v in sources_dict.items()]
 sources = [Source(**source_cfg) for source_cfg in sources_configs]
 
 array_cfg = config["array"]
-mic_array = open_array(**array_cfg)
+mic_array, mic_positions = open_array(**array_cfg)
 signals, signals_info = static_simulation(mic_array, sources)
 out_dir = config.get("out_dir", "./out/")
 isExist = os.path.exists(out_dir)
@@ -91,3 +92,6 @@ if not isExist:
 ]
 with open(f"{out_dir}delays.toml", mode="wb") as f:
     tomli_w.dump(signals_info, f)
+
+with open(f"{out_dir}array.toml", mode"wb") as f:
+    tomli_w.dump(mic_positions, f)

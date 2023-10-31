@@ -1,0 +1,19 @@
+sr = 48000
+sound_speed = 333
+out_dir = './out/arch_noise/'
+
+[sources]
+    [sources.source0]
+        position=[5,0,5]
+        name='box'
+        audio_file='./audio/drone.wav'
+
+   [sources.source1]
+       position=[0,-5,5]
+       name='noise'
+#        audio_file='./audio/drone.wav'
+       audio_file='./audio/dernNoise.wav'
+
+ [array]
+ mic_type = './config/noisyMic.toml'
+ array_config = './config/arch_test.toml'

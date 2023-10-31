@@ -30,7 +30,7 @@ def open_array(array_config, mic_type="./config/testMic.toml"):
         mic = Microphone(mic_config, position, normal, k)
         mics.append(mic)
     print("initilaized")
-    return mics
+    return mics, config
 
 
 def plot_array(mic_array, sources):
