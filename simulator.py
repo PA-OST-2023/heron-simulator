@@ -46,7 +46,7 @@ def static_simulation(mic_array, sources, surfaces=None):
         mic_signals.append(mic_signal)
         signals_info[mic.name] = delays
 
-    plot_array(mic_array, sources)
+    plot_array(mic_array, sources, walls)
     return mic_signals, signals_info
 
 
@@ -70,8 +70,10 @@ sources_configs = [v for k, v in sources_dict.items()]
 sources = [Source(**source_cfg) for source_cfg in sources_configs]
 
 array_cfg = config["array"]
+walls = config["walls"]
+
 mic_array = open_array(**array_cfg)
-signals, signals_info = static_simulation(mic_array, sources)
+signals, signals_info = static_simulation(mic_array, sources, walls)
 out_dir = config.get("out_dir", "./out/")
 isExist = os.path.exists(out_dir)
 if not isExist:

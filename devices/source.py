@@ -73,7 +73,7 @@ class Source:
         return sound_at_pos, normal_vec, delay
 
     def get_sound_from_mirror_pos(self, position, damp_f=0.1):
-        sound_at_pos = self.get_sound_at_position(position)
+        sound_at_pos, *_ = self.get_sound_at_position(position)
         sound_at_pos *= damp_f
         return sound_at_pos
 

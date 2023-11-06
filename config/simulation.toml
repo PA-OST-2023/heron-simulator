@@ -1,6 +1,8 @@
 sr = 44100
 sound_speed = 333
-out_dir = './out/test1/'
+out_dir = './out/rottest/'
+
+walls = [[[0,5,0], [1,0,0], [0,0,1]]]
 
 [sources]
     [sources.source0]
@@ -13,6 +15,8 @@ out_dir = './out/test1/'
         name='ander'
         audio_file='./audio/dernkala.wav'
  
- [array]
+[array]
  mic_type = './config/testMic.toml'
  array_config = './config/array.toml'
+ center=[0,0,1]
+ normal=[1,1,1]
