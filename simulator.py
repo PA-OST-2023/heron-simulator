@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import scipy
 import tomli
 import tomli_w
@@ -65,21 +66,27 @@ with open(args.config_file, "rb") as f:
 sources_dict = config.get("sources", None)
 if sources_dict is None:
     raise ValueError("No Sources")
+source_config_file = sources_dict.get('config', None)
+if source_config_file is not None:
+    print('sources from File')
+    with open(source_config_file, "rb") as f:
+        sources_dict = tomli.load(f)
 sources_configs = [v for k, v in sources_dict.items()]
 
 sources = [Source(**source_cfg) for source_cfg in sources_configs]
 
 array_cfg = config["array"]
-walls = config["walls"]
 
-mic_array = open_array(**array_cfg)
+walls = config["walls"]
+mic_array, mic_positions = open_array(**array_cfg)
+
 signals, signals_info = static_simulation(mic_array, sources, walls)
+
 out_dir = config.get("out_dir", "./out/")
 isExist = os.path.exists(out_dir)
 if not isExist:
     # Create a new directory because it does not exist
     os.makedirs(out_dir)
-    print("The new directory is created!")
 [
     write_wav(mic.recorded_audio, sources[0].sr, f"{out_dir}{mic.name}.wav")
     for mic in mic_array
@@ -94,3 +101,6 @@ if not isExist:
 ]
 with open(f"{out_dir}delays.toml", mode="wb") as f:
     tomli_w.dump(signals_info, f)
+
+with open(f"{out_dir}array.toml", mode"wb") as f:
+    tomli_w.dump(mic_positions, f)

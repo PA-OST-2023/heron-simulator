@@ -42,7 +42,7 @@ def open_array(array_config, mic_type="./config/testMic.toml", center=None, norm
         mic = Microphone(mic_config, position, normal, k)
         mics.append(mic)
     print("initilaized")
-    return mics
+    return mics, config
 
 def get_rot_m(n, n_new):
     n_new = n_new / np.linalg.norm(n_new)
@@ -63,7 +63,7 @@ def plot_array(mic_array, sources, walls=None):
         source_mesh += sphere
     mic_mesh = o3d.geometry.TriangleMesh()
     for mic in mic_array:
-        sphere = o3d.geometry.TriangleMesh.create_sphere(radius=0.131)
+        sphere = o3d.geometry.TriangleMesh.create_sphere(radius=0.061)
         sphere.translate(mic.position)
         mic_mesh += sphere
     zero_ground = []

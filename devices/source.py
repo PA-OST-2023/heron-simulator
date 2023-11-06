@@ -17,7 +17,7 @@ class Source:
     _speed_sound = None
 
     def __init__(
-        self, position=None, name="Default", audio_file=None, speed_sound=333, sr=44100
+            self, position=None, name="Default", audio_file=None, speed_sound=333, sr=44100, frequency=222, lenght=10
     ):
         if position is None:
             position = np.zeros(3)
@@ -26,6 +26,8 @@ class Source:
         self.sr = sr
         self.name = name
         if audio_file is None:
+            x = np.linspace(0, lenght, sr * length)
+            self._sound = np.sin(2 * np.pi * frequency * x)
             return
         audio = read_wav(audio_file)
         self.sr = audio.sr

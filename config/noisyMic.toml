@@ -1,0 +1,6 @@
+[info]
+name = 'Mic 1'
+
+[characteristics]
+# Noise in dBm
+noiselevel = 40
