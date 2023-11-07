@@ -96,7 +96,7 @@ def plot_array(mic_array, sources, walls=None):
             for s in np.arange(-10,11,0.1):
                 for t in np.arange(-10,11,0.1):
                     wall_points.append(p + s * u + t *v)
-    wall_pcd.points = o3d.utility.Vector3dVector(np.array(wall_points))
+        wall_pcd.points = o3d.utility.Vector3dVector(np.array(wall_points))
     mic_mesh.paint_uniform_color([1.0, 0.75, 0.0])
     source_mesh.paint_uniform_color([0.1, 0.75, 1.0])
     wall_pcd.paint_uniform_color([0.01, 0.99, 0.66])

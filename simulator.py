@@ -77,7 +77,7 @@ sources = [Source(**source_cfg) for source_cfg in sources_configs]
 
 array_cfg = config["array"]
 
-walls = config["walls"]
+walls = config.get("walls", None)
 mic_array, mic_positions = open_array(**array_cfg)
 
 signals, signals_info = static_simulation(mic_array, sources, walls)
@@ -102,5 +102,5 @@ if not isExist:
 with open(f"{out_dir}delays.toml", mode="wb") as f:
     tomli_w.dump(signals_info, f)
 
-with open(f"{out_dir}array.toml", mode"wb") as f:
+with open(f"{out_dir}array.toml", mode="wb") as f:
     tomli_w.dump(mic_positions, f)

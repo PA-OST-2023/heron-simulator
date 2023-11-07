@@ -1,36 +1,36 @@
 [microphones]
     [microphones.mic_1]
-    position = [1.0,0.0,0.0]
+    position = [0.0,0.0,0.0]
     normal = [0.0,1.0,1.0]
 
     [microphones.mic_2]
-    position = [1.0,0.0,1.0]
+    position = [1.0,0.0,0.0]
     normal = [0.0,1.0,1.0]
 
     [microphones.mic_3]
-    position = [1.0,1.0,1.0]
-    normal = [0.0,1.0,1.0]
-
-    [microphones.mic_4]
     position = [1.0,1.0,0.0]
     normal = [0.0,1.0,1.0]
 
+    [microphones.mic_4]
+    position = [0.0,1.0,0.0]
+    normal = [0.0,1.0,1.0]
+
     [microphones.mic_5]
-    position = [1.0,-1.0,1.0]
+    position = [-1.0,1.0,0.0]
     normal = [0.0,1.0,1.0]
 
     [microphones.mic_6]
-    position = [1.0,-1.0,0.0]
+    position = [-1.0,0.0,0.0]
     normal = [0.0,1.0,1.0]
 
     [microphones.mic_7]
-    position = [1.0,0.0,-1.0]
+    position = [-1.0,-1.0,0.0]
     normal = [0.0,1.0,1.0]
 
     [microphones.mic_8]
-    position = [1.0,-1.0,-1.0]
+    position = [0.0,-1.0,0.0]
     normal = [0.0,1.0,1.0]
 
     [microphones.mic_9]
-    position = [1.0,1.0,-1.0]
+    position = [1.0,-1.0,0.0]
     normal = [0.0,1.0,1.0]
