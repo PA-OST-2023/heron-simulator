@@ -17,7 +17,7 @@ class Source:
     _speed_sound = None
 
     def __init__(
-            self, position=None, name="Default", audio_file=None, speed_sound=333, sr=44100, frequency=222, lenght=10
+            self, position=None, name="Default", audio_file=None, speed_sound=333, sr=44100, frequency=222, lenght=10, gain=1
     ):
         if position is None:
             position = np.zeros(3)
@@ -31,7 +31,7 @@ class Source:
             return
         audio = read_wav(audio_file)
         self.sr = audio.sr
-        self._sound = audio.audio
+        self._sound = audio.audio * gain
 
     @classmethod
     def fromposition(cls, position):

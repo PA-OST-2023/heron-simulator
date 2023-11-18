@@ -14,7 +14,6 @@ from devices.microphone import Microphone
 from audioHelper import write_wav
 from geometry import mirror_pos
 
-
 def static_simulation(mic_array, sources, surfaces=None):
     """
     Perform a simulation with static position of the sources
@@ -48,21 +47,32 @@ def static_simulation(mic_array, sources, surfaces=None):
         mic_signals.append(mic_signal)
         signals_info[mic.name] = delays
 
-    plot_array(mic_array, sources, walls)
+#     plot_array(mic_array, sources, walls)
     return mic_signals, signals_info
+
 
 
 parser = ArgumentParser()
 parser.add_argument(
     "-c",
     "--config_file",
-    help="path to general config file",
+    help="path to general config file FUCK YOU",
+    default="./config/simulation.toml",
+)
+
+parser.add_argument(
+    "-a",
+    "--angles_file",
+    help="File to angles configuration",
     default="./config/simulation.toml",
 )
 args = parser.parse_args()
 
 with open(args.config_file, "rb") as f:
     config = tomli.load(f)
+
+with open(args.angles_file, "rb") as f:
+    angles_config = tomli.load(f)
 
 sources_dict = config.get("sources", None)
 if sources_dict is None:
@@ -74,34 +84,37 @@ if source_config_file is not None:
         sources_dict = tomli.load(f)
 sources_configs = [v for k, v in sources_dict.items()]
 
-sources = [Source(**source_cfg) for source_cfg in sources_configs]
+sources = [Source(gain=10, **source_cfg) for source_cfg in sources_configs]
 
 array_cfg = config["array"]
 
 walls = config.get("walls", None)
 mic_array, mic_positions = open_array(**array_cfg)
 
-signals, signals_info = static_simulation(mic_array, sources, walls)
-
 out_dir = config.get("out_dir", "./out/")
 isExist = os.path.exists(out_dir)
 if not isExist:
     # Create a new directory because it does not exist
     os.makedirs(out_dir)
-[
-    write_wav(mic.recorded_audio, sources[0].sr, f"{out_dir}{mic.name}.wav")
-    for mic in mic_array
-]
-[
-    write_wav(
-        mic.recorded_audio_by_source,
-        sources[0].sr,
-        f"{out_dir}{mic.name}_separated.wav",
-    )
-    for mic in mic_array
-]
-with open(f"{out_dir}delays.toml", mode="wb") as f:
-    tomli_w.dump(signals_info, f)
 
-with open(f"{out_dir}array.toml", mode="wb") as f:
-    tomli_w.dump(mic_positions, f)
+azimuth = angles_config['az']
+elevation = angles_config['el']
+azimuth_padded = azimuth + [2] * len(elevation)
+elevation_padded= [87]*len(azimuth) + elevation
+prefix = ["az"] * len(azimuth)+ ["el"]*len(elevation)
+r=15
+for az, el, n in zip(azimuth_padded, elevation_padded, prefix):
+    az_rad = az/180 * pi
+    el_rad = el/180 * pi
+    x = sin(el_rad) * cos(az_rad) * r
+    y = sin(el_rad) * sin(az_rad) * r
+    z = cos(el_rad) * r
+    sources[0].position = np.array([x,y,z])
+    signals, signals_info = static_simulation(mic_array, sources, walls)
+    data = np.vstack(signals).astype(np.float32)
+    data = np.swapaxes(data, 0,1)
+    suff = el
+    if n == "az":
+        suff = az
+    write_wav(data, sources[0].sr, f"{out_dir}{n}_{suff}.wav")
+#         write_wav(mic.recorded_audio, sources[0].sr, f"{out_dir}{mic.name}.wav")
