@@ -47,7 +47,7 @@ def static_simulation(mic_array, sources, surfaces=None):
         mic_signals.append(mic_signal)
         signals_info[mic.name] = delays
 
-#     plot_array(mic_array, sources, walls)
+    plot_array(mic_array, sources, walls)
     return mic_signals, signals_info
 
 

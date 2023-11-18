@@ -63,7 +63,7 @@ def plot_array(mic_array, sources, walls=None):
         source_mesh += sphere
     mic_mesh = o3d.geometry.TriangleMesh()
     for mic in mic_array:
-        sphere = o3d.geometry.TriangleMesh.create_sphere(radius=0.061)
+        sphere = o3d.geometry.TriangleMesh.create_sphere(radius=0.021)
         sphere.translate(mic.position)
         mic_mesh += sphere
     zero_ground = []

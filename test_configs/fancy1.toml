@@ -1,0 +1,15 @@
+sr = 44100
+sound_speed = 333
+out_dir = './out/test_sim/fancy1/'
+
+# walls = [[[0,5,0], [1,0,0], [0,0,1]]]
+
+[sources]
+    [sources.source0]
+        position=[10,3,5]
+        name='box'
+        audio_file='./audio/drone.wav'
+
+[array]
+ mic_type = './config/testMic.toml'
+ array_config = './test_configs/arrays/fancy1.toml'
