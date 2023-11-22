@@ -1,6 +1,6 @@
 sr = 44100
 sound_speed = 333
-out_dir = './out/test_sim/spherical/'
+out_dir = './out/test_sim/fancy_spherical/'
 
 # walls = [[[0,5,0], [1,0,0], [0,0,1]]]
 
@@ -12,4 +12,4 @@ out_dir = './out/test_sim/spherical/'
 
 [array]
  mic_type = './config/testMic.toml'
- array_config = './test_configs/spherical.toml'
+ array_config = './test_configs/spherical_fancy.toml'
