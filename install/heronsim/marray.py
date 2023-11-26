@@ -2,8 +2,8 @@ import tomli
 import open3d as o3d
 import numpy as np
 import matplotlib.pyplot as plt
-from devices.source import Source
-from devices.microphone import Microphone
+from .devices.source import Source
+from .devices.microphone import Microphone
 
 
 def open_array(array_config, mic_type="./config/testMic.toml", center=None, normal=None):

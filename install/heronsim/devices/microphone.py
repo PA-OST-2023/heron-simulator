@@ -4,7 +4,7 @@ import scipy
 import tomli
 
 try:
-    from source import Source
+    from .source import Source
 except ModuleNotFoundError:
     pass
 

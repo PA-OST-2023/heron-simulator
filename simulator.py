@@ -8,12 +8,12 @@ import matplotlib.pyplot as plt
 from argparse import ArgumentParser
 import os
 
-from marray import open_array, plot_array
-from devices.source import Source
-from devices.microphone import Microphone
-from audioHelper import write_wav
-from geometry import mirror_pos
-from simulator import static_simulation
+from heronsim.marray import open_array, plot_array
+from heronsim.devices.source import Source
+from heronsim.devices.microphone import Microphone
+from heronsim.audioHelper import write_wav
+from heronsim.geometry import mirror_pos
+from heronsim.simulation import static_simulation
 
 
 # def static_simulation(mic_array, sources, surfaces=None):

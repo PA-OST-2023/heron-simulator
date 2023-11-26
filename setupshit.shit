@@ -1,0 +1,28 @@
+# from setuptools import setup, find_packages
+# 
+# setup(
+#     name='heronsimulator',
+#     version='0.1.0',    
+#     description='Simulator for Heron Project',
+#     url='https://github.com/PA-OST-2023/heron-simulator.git',
+#     author='Alain Keller, Florian Baumgartner',
+#     author_email='alain.keller@ost.ch',
+#     license='BSD 2-clause',
+# #     packages=['heron-simulator'],
+# #     packages=find_packages(include=['heron-simulator', 'heron-simulator.*']),,
+#     packages=find_packages(),
+#     install_requires=['open3d',
+#                       'scipy',
+#                       'matplotlib',
+#                       'numpy',
+#                       'tomli',
+#                       ],
+# 
+#     classifiers=[
+#         'Development Status :: 1 - Planning',
+#         'Intended Audience :: Science/Research',
+#         'License :: OSI Approved :: BSD License',  
+#         'Operating System :: POSIX :: Linux',        
+#         'Programming Language :: Python :: 3.8',
+#     ],
+# )

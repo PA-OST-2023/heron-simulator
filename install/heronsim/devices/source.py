@@ -4,9 +4,9 @@ import tomli
 import matplotlib.pyplot as plt
 import sys
 
-sys.path.append("..")
-sys.path.append("./")
-from audioHelper import AudioObject, read_wav
+# sys.path.append("..")
+# sys.path.append("./")
+from heronsim.audioHelper import AudioObject, read_wav
 
 
 class Source:

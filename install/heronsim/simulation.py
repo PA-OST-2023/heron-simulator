@@ -1,8 +1,9 @@
 import numpy as np
 
-from devices.source import Source
-from marray import open_array, plot_array
-from devices.microphone import Microphone
+from .devices.source import Source
+from .marray import open_array, plot_array
+from .devices.microphone import Microphone
+from .geometry import mirror_pos
 
 
 
