@@ -6,7 +6,7 @@ from devices.microphone import Microphone
 
 
 
-def static_simulation(mic_array, sources, surfaces=None):
+def static_simulation(mic_array, sources, surfaces=None, plot=False):
     """
     Perform a simulation with static position of the sources
     and microphone array
@@ -38,8 +38,8 @@ def static_simulation(mic_array, sources, surfaces=None):
         mic_signal = mic.simulate_mic(signal_at_position, normal)
         mic_signals.append(mic_signal)
         signals_info[mic.name] = delays
-
-    plot_array(mic_array, sources, surfaces)
+    if plot:
+        plot_array(mic_array, sources, surfaces)
     return mic_signals, signals_info
 
 
