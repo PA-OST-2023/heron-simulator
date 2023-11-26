@@ -44,6 +44,26 @@ def open_array(array_config, mic_type="./config/testMic.toml", center=None, norm
     print("initilaized")
     return mics, config
 
+def open_array_from_numpy(positions, mic_type, center=None, normal=None):
+    print("Initilaize Array")
+    if center is not None:
+        offset = np.array(center)
+    else:
+        offset = np.zeros(3)
+    if normal is not None:
+        r = get_rot_m(np.array([1,0,0], dtype=np.float32), np.array(normal, dtype=np.float32))
+    else:
+        r = np.eye(3)
+    mics = []
+    for i, position in enumerate(positions):
+        position = r @ position.T + offset
+        mic = Microphone(mic_type, position, name=f'{i}')
+        mics.append(mic)
+    print("Initialized Array")
+    return mics
+
+
+
 def get_rot_m(n, n_new):
     n_new = n_new / np.linalg.norm(n_new)
     n = n / np.linalg.norm(n)
