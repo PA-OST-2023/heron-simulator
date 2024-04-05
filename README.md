@@ -11,6 +11,11 @@ Python = 3.8.10
 
 Install `Requirements.txt` with Pip
 
+Install HeronSim with
+```
+ pip install "git+ssh://git@github.com/PA-OST-2023/heron-simulator.git/#egg=heronsim&subdirectory=install"
+```
+
 ## Usage
 ```
 python ./simulator.py -c ./config/{your config}.toml
