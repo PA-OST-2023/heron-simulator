@@ -57,7 +57,7 @@ parser = ArgumentParser()
 parser.add_argument(
     "-c",
     "--config_file",
-    help="path to general config file FUCK YOU",
+    help="path to general config file",
     default="./config/simulation.toml",
 )
 
